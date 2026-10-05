@@ -12,6 +12,13 @@ for (const route of routes) {
   });
 }
 
+test('every route answers directly, without a redirect', async ({ request }) => {
+  for (const route of routes) {
+    const response = await request.get(route.path, { maxRedirects: 0 });
+    expect(response.status(), route.path).toBe(200);
+  }
+});
+
 test('no page logs an error, including Content-Security-Policy violations', async ({ page }) => {
   const errors: string[] = [];
   page.on('console', (message) => {

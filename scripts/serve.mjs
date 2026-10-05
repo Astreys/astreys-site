@@ -42,19 +42,30 @@ async function isFile(path) {
   }
 }
 
+// Mirrors Netlify: a file wins; /about serves about.html; a directory with an
+// index.html is reached by redirecting /about → /about/ — so a page emitted
+// as a directory by accident shows up as a redirect in tests, as it would live.
 async function resolve(pathname) {
   const safe = normalize(decodeURIComponent(pathname)).replace(/^(\.\.[/\\])+/, '');
   const base = join(root, safe);
   if (!base.startsWith(root.replace(/[/\\]$/, ''))) return null;
-  for (const candidate of [base, join(base, 'index.html'), `${base}.html`]) {
-    if (await isFile(candidate)) return candidate;
+  if (await isFile(base)) return { file: base };
+  if (!pathname.endsWith('/') && (await isFile(`${base}.html`))) return { file: `${base}.html` };
+  if (await isFile(join(base, 'index.html'))) {
+    return pathname.endsWith('/') ? { file: join(base, 'index.html') } : { redirect: `${pathname}/` };
   }
   return null;
 }
 
 createServer(async (req, res) => {
   const { pathname } = new URL(req.url ?? '/', 'http://localhost');
-  const file = await resolve(pathname);
+  const found = await resolve(pathname);
+  if (found?.redirect) {
+    res.writeHead(301, { location: found.redirect });
+    res.end();
+    return;
+  }
+  const file = found?.file;
   const status = file ? 200 : 404;
   const path = file ?? join(root, '404.html');
   const type = types[extname(path)] ?? 'application/octet-stream';
