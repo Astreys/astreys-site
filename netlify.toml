@@ -1,0 +1,43 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Playwright's browsers are only needed in CI, not to build the site.
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1"
+
+# www → apex. Every route is pre-rendered, so there is no SPA fallback:
+# unknown paths get dist/404.html with a real 404 status.
+[[redirects]]
+  from = "https://www.astreys.com/*"
+  to = "https://astreys.com/:splat"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Scripts: our own bundle plus GoatCounter's counter. No inline script,
+    # no eval, no third-party embeds (SPEC §12).
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://gc.zgo.at; connect-src 'self' https://astreys.goatcounter.com; img-src 'self' https://astreys.goatcounter.com; style-src 'self'; font-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# Vite's output is content-hashed, and font files never change in place.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Media keeps stable names, so cache it for a week rather than forever.
+[[headers]]
+  for = "/media/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
