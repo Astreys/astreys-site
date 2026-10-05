@@ -8,12 +8,14 @@ on:
 
 jobs:
   baselines:
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: visual baselines depend on the OS font
+    # rendering, so the runner image changes only when we choose.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -27,7 +29,7 @@ jobs:
         env:
           UPDATE_BASELINES: '1'
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: linux-visual-baselines
           path: e2e/visual.spec.ts-snapshots/*-linux.png
