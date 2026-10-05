@@ -1,0 +1,10 @@
+# LF everywhere, whatever the contributor's OS: CI runs on Linux, and visual
+# baselines and generated files should not churn on line endings.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.avif binary
+*.mp4 binary
+*.woff2 binary
+*.pdf binary

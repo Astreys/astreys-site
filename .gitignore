@@ -1,0 +1,21 @@
+node_modules/
+dist/
+dist-ssr/
+coverage/
+test-results/
+playwright-report/
+blob-report/
+*.log
+*.tsbuildinfo
+
+# Originals for scripts/process-media.mjs. Large, and phone photos carry GPS.
+media-src/
+
+.env
+.env.*
+!.env.example
+
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
