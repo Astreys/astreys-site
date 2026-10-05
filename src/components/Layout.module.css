@@ -1,0 +1,33 @@
+.shell {
+  max-width: calc(var(--wide) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.main {
+  padding-block: 1.5rem 0;
+}
+
+@media (min-width: 48rem) {
+  .main {
+    padding-block-start: 2.5rem;
+  }
+}
+
+.skip {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1;
+  padding: 0.5rem 0.875rem;
+  background: var(--button);
+  color: var(--button-ink);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip:focus {
+  transform: none;
+}

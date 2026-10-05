@@ -1,0 +1,144 @@
+.entry {
+  display: grid;
+  gap: 1.75rem;
+  padding-block: 2.5rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.entry + .entry {
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 56rem) {
+  .entry {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 3.5rem;
+    align-items: start;
+    padding-block: 4rem;
+  }
+
+  /* The screenshot stays in view while the write-up scrolls past it. */
+  .media {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
+.media {
+  display: grid;
+  gap: 1rem;
+}
+
+.figure {
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.figure img {
+  width: 100%;
+}
+
+.content {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.head {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.name {
+  font-size: clamp(1.625rem, 1.1rem + 1.8vw, 2.25rem);
+  letter-spacing: -0.025em;
+}
+
+.number {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.url {
+  overflow-wrap: anywhere;
+}
+
+.prose {
+  display: grid;
+  gap: 1em;
+  max-width: var(--measure);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+@media (min-width: 36rem) {
+  .facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* The number reads first; the label follows, as it does in the DOM order
+   a screen reader hears ("tests, 360"). */
+.fact {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.factValue {
+  margin: 0;
+  color: var(--accent);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.factLabel {
+  margin-top: 0.5rem;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.stack {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.stackLabel {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+}
+
+.note {
+  max-width: var(--measure);
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent);
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}

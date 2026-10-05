@@ -1,0 +1,141 @@
+/* Shared page structure. Page-specific styles live in {Page}.module.css. */
+
+.pageHead {
+  display: grid;
+  gap: 1rem 3rem;
+  padding-block: 1rem 1.5rem;
+}
+
+@media (min-width: 56rem) {
+  .pageHead {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+    align-items: end;
+  }
+}
+
+.pageHeadMain {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
+
+.title {
+  font-size: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.tagline {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 56rem) {
+  .tagline {
+    text-align: right;
+  }
+}
+
+.lede {
+  max-width: 36em;
+  color: var(--ink-soft);
+  font-size: 1.1875rem;
+}
+
+.section {
+  margin-block-start: var(--space-section);
+}
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-block-end: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+}
+
+.prose {
+  display: grid;
+  gap: 1em;
+  max-width: var(--measure);
+}
+
+.meta {
+  color: var(--ink-soft);
+}
+
+/* A section with its title in a narrow left column. */
+
+.split {
+  display: grid;
+  gap: 1.5rem 4rem;
+}
+
+@media (min-width: 56rem) {
+  .split {
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+  }
+}
+
+.splitTitle {
+  margin-top: 0.75rem;
+  font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.25rem);
+}
+
+.splitBody {
+  display: grid;
+  gap: 2.5rem;
+  min-width: 0;
+}
+
+/* Work: employment, as a timeline */
+
+.roles {
+  display: grid;
+  list-style: none;
+  border-left: 2px solid var(--rule);
+}
+
+.role {
+  position: relative;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0 0 1.75rem 1.5rem;
+}
+
+.role::before {
+  content: '';
+  position: absolute;
+  left: -0.4375rem;
+  top: 0.45rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  background: var(--ground);
+}
+
+.role:first-child::before {
+  background: var(--accent);
+}
+
+.roleCompany {
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+
+.roleMeta {
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.roleSummary {
+  max-width: var(--measure);
+  font-size: 0.9375rem;
+}

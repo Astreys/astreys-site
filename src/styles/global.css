@@ -1,0 +1,317 @@
+/*
+ * Global layer: fonts, design tokens, element defaults and a few shared
+ * primitives (buttons, chips, eyebrow). Everything component-specific lives
+ * in a CSS Module next to its component.
+ *
+ * Two schemes, chosen by the system preference:
+ *   light — clean and airy: pale ground, white surfaces, navy ink, blue accent
+ *   dark  — deep navy ground, bright cyan accent, photographs at dusk-level
+ */
+
+/* Archivo, Latin subset, self-hosted. 400 and 700 are preloaded. */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/archivo-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/archivo-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/archivo-latin-700-normal.woff2') format('woff2');
+}
+
+/* Metric-matched fallbacks: Arial scaled to occupy the same box as Archivo
+   (measured in Chromium), so the swap neither shifts layout nor repaints text
+   at a new size — which would otherwise push LCP back on slow connections. */
+@font-face {
+  font-family: 'Archivo Fallback';
+  font-weight: 400;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 97.95%;
+  ascent-override: 89.84%;
+  descent-override: 21.44%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo Fallback';
+  font-weight: 600 700;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 97.42%;
+  ascent-override: 90.33%;
+  descent-override: 21.56%;
+  line-gap-override: 0%;
+}
+
+:root {
+  --font: 'Archivo', 'Archivo Fallback', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Light. Contrast on --surface: ink 16.9:1, ink-soft 6.5:1, accent 5.9:1,
+     border-ui 3.4:1. */
+  --ground: #f5f7fb;
+  --surface: #ffffff;
+  --ink: #0e1a2b;
+  --ink-soft: #4f5d74;
+  --accent: #1d5bd6;
+  --accent-ink: #ffffff;
+  --button: #0f2747;
+  --button-ink: #ffffff;
+  --rule: #e2e7ef;
+  --border-ui: #7c899e;
+  --chip: #eef2f8;
+  --shadow: 0 1px 2px rgb(14 26 43 / 0.04), 0 8px 24px rgb(14 26 43 / 0.06);
+  --hero-fade: #f5f7fb;
+  --overlay: rgb(8 16 30 / 0.72);
+
+  --measure: 66ch;
+  --wide: 76rem;
+  --gutter: 1rem;
+  --radius: 0.75rem;
+  --space-section: 4.5rem;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark. Contrast on --ground: ink 16.2:1, ink-soft 8.3:1, accent 10.6:1,
+       border-ui 3.3:1. */
+    --ground: #0a1220;
+    --surface: #0f1a2c;
+    --ink: #e9eff8;
+    --ink-soft: #a3b3ca;
+    --accent: #34d6e3;
+    --accent-ink: #04212a;
+    --button: #34d6e3;
+    --button-ink: #04212a;
+    --rule: #1d2a40;
+    --border-ui: #52647f;
+    --chip: #15233a;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.35);
+    --hero-fade: #0a1220;
+    --overlay: rgb(5 10 20 / 0.78);
+  }
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 2rem;
+    --space-section: 6.5rem;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+figure {
+  margin: 0;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--border-ui);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a {
+    transition:
+      color 120ms ease-out,
+      text-decoration-color 120ms ease-out;
+  }
+}
+
+/* One focus style for everything interactive: never removed, always visible. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Programmatic focus targets after client-side navigation are not
+   interactive; they only move the screen reader's reading position. */
+[tabindex='-1']:focus:not(a, button, video) {
+  outline: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ---- Shared primitives ------------------------------------------------ */
+
+/* Small label above a page or section title. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 1.25rem;
+  height: 2px;
+  background: currentColor;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--button);
+  border-radius: 999px;
+  background: var(--button);
+  color: var(--button-ink);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.button:hover {
+  color: var(--button-ink);
+  filter: brightness(1.12);
+}
+
+.buttonSecondary {
+  background: transparent;
+  border-color: var(--border-ui);
+  color: var(--ink);
+}
+
+.buttonSecondary:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  filter: none;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  list-style: none;
+}
+
+.chip {
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--chip);
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.arrowLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.arrowLink::after {
+  content: '\2192';
+  content: '\2192' / '';
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .arrowLink::after {
+    transition: transform 150ms ease-out;
+  }
+
+  .arrowLink:hover::after {
+    transform: translateX(3px);
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

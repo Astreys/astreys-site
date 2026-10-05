@@ -1,0 +1,151 @@
+/* ---- Hero ---- */
+
+.hero {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 56rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 1rem;
+    min-height: 32rem;
+  }
+}
+
+.heroText {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+
+.heroTitle {
+  font-size: clamp(2.375rem, 1.4rem + 3.6vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.heroLede {
+  max-width: 36em;
+  color: var(--ink-soft);
+  font-size: 1.125rem;
+}
+
+.stackLine {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* The photograph fades into the page on the side facing the text, so the
+   hero reads as one surface rather than text next to a box. */
+.heroMedia {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.heroMedia img {
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+  /* Keep the CN Tower and the wingtip in frame at every crop. */
+  object-position: 72% 55%;
+}
+
+@media (min-width: 56rem) {
+  .heroMedia {
+    border-radius: 0 var(--radius) var(--radius) 0;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 30%);
+    mask-image: linear-gradient(to right, transparent 0, #000 30%);
+  }
+
+  .heroMedia img {
+    height: 30rem;
+  }
+}
+
+/* The illustration is already at dusk; in the dark scheme, just settle its
+   lower edge into the page. */
+@media (prefers-color-scheme: dark) {
+  .heroMedia::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(10 18 32 / 0.6), rgb(10 18 32 / 0.1) 60%);
+  }
+}
+
+/* ---- Featured work ---- */
+
+.cards {
+  display: grid;
+  gap: 1.25rem;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.cards > li {
+  display: grid;
+}
+
+/* ---- About ---- */
+
+.about {
+  display: grid;
+  gap: 1.5rem 4rem;
+  scroll-margin-top: 1.5rem;
+}
+
+@media (min-width: 56rem) {
+  .about {
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+  }
+}
+
+.aboutTitle {
+  margin-top: 0.75rem;
+  font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.25rem);
+}
+
+.aboutBody {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.availability {
+  display: grid;
+  gap: 0.75rem;
+  max-width: var(--measure);
+  padding: 1.5rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.availabilityTitle {
+  font-size: 1.125rem;
+}
+
+.fileMeta {
+  font-weight: 400;
+  opacity: 0.85;
+}

@@ -1,0 +1,73 @@
+.clip {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.media {
+  border-radius: var(--radius);
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #000;
+}
+
+.facade {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  text-decoration: none;
+}
+
+/* A labelled pill ("Play 0:24") rather than an icon-only button, so the
+   control says what it does and how long the clip is. */
+.play {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem 0.5rem 0.75rem;
+  background: var(--button);
+  color: var(--button-ink);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.play::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-block: 0.4em solid transparent;
+  border-inline-start: 0.65em solid currentColor;
+}
+
+.facade:hover .play {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+.duration {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+
+.caption {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.meta {
+  color: var(--ink-soft);
+}
