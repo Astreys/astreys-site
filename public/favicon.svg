@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    rect { fill: #0f2747; }
+    path { stroke: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      rect { fill: #34d6e3; }
+      path { stroke: #04212a; }
+    }
+  </style>
+  <rect width="32" height="32" rx="3"/>
+  <!-- A runway centreline seen from short final. -->
+  <path d="M16 6v4m0 4v4m0 4v4" fill="none" stroke-width="3" stroke-linecap="square"/>
+</svg>
