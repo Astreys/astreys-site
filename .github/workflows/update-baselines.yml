@@ -1,0 +1,33 @@
+name: Update visual baselines
+
+# Visual baselines are rendered per platform. CI runs on Linux, so its
+# baselines must be generated on Linux: run this workflow by hand, download
+# the artifact, and commit the PNGs to e2e/visual.spec.ts-snapshots/.
+on:
+  workflow_dispatch:
+
+jobs:
+  baselines:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+
+      - name: Render baselines
+        run: npx playwright test e2e/visual.spec.ts --update-snapshots
+        env:
+          UPDATE_BASELINES: '1'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-visual-baselines
+          path: e2e/visual.spec.ts-snapshots/*-linux.png
